@@ -20,42 +20,37 @@ class Button {
     //behaving function
   }
   void show() {
-    touchingRect();
+    drawButton();
+    drawLabel();
+  }
+
+
+  boolean touchingMouse() {
+    return mouseX> x-w/2 && mouseX<x+w/2 && mouseY > y-h/2 && mouseY< y+h/2;
+  }
+
+
+  void drawButton() {
+    rectMode(CENTER);
     stroke(0);
     strokeWeight(4);
+    if (touchingMouse()) {
+      fill(highlight);
+    } else {
+      fill(normal);
+    }
     rect(x, y, w, h, 30);
+  }
 
-
+  void drawLabel() {
     textAlign(CENTER, CENTER);
-    textChange();
     textSize(w/4);
+    if (touchingMouse()) {
+
+      fill(normal);
+    } else {
+      fill(highlight);
+    }
     text(text, x, y);
-
-
-
-    if(mouseReleased && mouseX>x-w/2 && mouseX < x+w/2 && mouseY > y-h/2 && mouseY< y+h/2){
-    clicked = true;
-    }else{
-     clicked =false;
-    }
   }
-
-  void touchingRect() {
-    //rect
-    rectMode(CENTER);
-    if (mouseX >x-w/2 && mouseX < x+w/2 && mouseY > y-h/2 && mouseY< y+h/2) {
-      fill(highlight);
-    } else {
-      fill(normal);
-    }
-  }
-  void textChange() {
-    if (mouseX >x-w/2 && mouseX < x+w/2 && mouseY > y-h/2 && mouseY< y+h/2) {
-      fill(normal);
-    } else {
-      fill(highlight);
-    }
-  }
-  
-  
 }
