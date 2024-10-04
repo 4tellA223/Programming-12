@@ -4,6 +4,8 @@ class Button {
   boolean clicked;
   color highlight, normal;
   String text;
+ PImage img;
+ boolean isImg =false;
 
 
   //construct
@@ -16,12 +18,24 @@ class Button {
     normal = norm;
     text = t;
     clicked = false;
-
-    //behaving function
+  }Button(PImage img1, int x1, int y1, int w1, int h1, color norm, color high) {
+    img =img1;
+    x =x1;
+    y = y1;
+    w = w1;
+    h= h1;
+    highlight = high;
+    normal = norm;
+    clicked = false;
+    isImg =true;
   }
+  
+   //behaving function
   void show() {
     drawButton();
     drawLabel();
+    clicks();
+  if(clicked)background(normal);
   }
 
 
@@ -51,6 +65,20 @@ class Button {
     } else {
       fill(highlight);
     }
+    if(!isImg)
     text(text, x, y);
+    if(isImg){
+      imageMode(CENTER);
+    image(img,x,y,150,150);
+    }
+  }
+
+
+  void clicks() {
+    if (mouseReleased && touchingMouse()) {
+      clicked = true;
+    } else {
+      clicked =false;
+    }
   }
 }
