@@ -17,12 +17,12 @@ void game() {
     p1x -= 5;
     p1Timer--;
     p2x -= 5;
-    // Manage leg movement
+    
     legmoveTimer--;
     i -= 0.005;
     if (legmoveTimer < 0) {
       legmoveTimer = 100;
-      i = 1; // Reset i for lift
+      i = 1; 
     }
   }
 
@@ -87,6 +87,8 @@ void game() {
   }
   if (p2win==2 || p1win ==2) {
     mode = GAMEOVER;
+    iscountdown = false; 
+    countdownTimer = 3; 
   }
 }
 
@@ -281,12 +283,13 @@ void countdown() {
     if (countdownFrame >= 60) {
       countdownFrame = 0; 
       countdownTimer--; 
+      
     }
 
     
     if (countdownTimer < 1) {
       iscountdown = false; 
-      // Reset for the next round
+
       countdownTimer = 3; 
       roundWaitTimer = 100;
       p1Timer = 10;
@@ -296,7 +299,10 @@ void countdown() {
   
     textSize(100);
    
+    
+    fill(#77ACCE);
+    square(width/2-50,height/2-180,100);
     fill(255, 255, 255, 150); 
-    text(countdownTimer, width / 2, height / 2); 
+    text(countdownTimer, width / 2-30, height / 2-100); 
   }
 }

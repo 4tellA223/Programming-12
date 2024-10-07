@@ -18,5 +18,7 @@ void gameoverClicks() {
     mode = INTRO;
     p1win = 0;
     p2win =0;
+    iscountdown = false; 
+     roundWaitTimer = 100;
   }
 }

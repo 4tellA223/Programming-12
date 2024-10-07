@@ -14,7 +14,6 @@ void intro(){
 }
 
 void introClicks(){
-  iscountdown =true;
   mode =GAME;
 
 }
