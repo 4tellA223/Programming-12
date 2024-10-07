@@ -1,6 +1,10 @@
 
 void game() {
   textFont(game);
+  if(iscountdown){
+    countdown();
+    return;
+  }
 
   //is pulling boolean
   boolean isLeft = akey;
@@ -9,13 +13,19 @@ void game() {
 
 
   //player1 setup pulling//////////////////////////////////////////////////
-  if (roundWaitTimer == 100) {
-    if (isLeft && p1Timer > 0) {
-      p1x -= 5 ;
-      p1Timer --;
-      p2x-=5;
+  if (roundWaitTimer == 100 && isLeft && p1Timer > 0) {
+    p1x -= 5;
+    p1Timer--;
+    p2x -= 5;
+    // Manage leg movement
+    legmoveTimer--;
+    i -= 0.005;
+    if (legmoveTimer < 0) {
+      legmoveTimer = 100;
+      i = 1; // Reset i for lift
     }
   }
+
 
 
   //player2 setup pulling/////////////////////////////////////////////////////
@@ -48,34 +58,36 @@ void game() {
   }
 
   //////////////////////////wining and losing vairables/////////////////////////////////
-  if (p1x <=65 ) {
-    roundWaitTimer --;
-    p2Size -=0.005;
+ if (p1x <= 65) {
+    roundWaitTimer--;
+    p2Size -= 0.005;
     if (roundWaitTimer < 0) {
-      p1x = 200;
+      iscountdown = true;
+      p1x = 200;  
       p2x = 600;
-      roundWaitTimer = 100;
-      p2Size =1;
+      roundWaitTimer = 1000; 
+      p2Size = 1;
       p1win++;
+      countdownTimer = 3; 
     }
   }
+
   if (p2x >= 720) {
-    roundWaitTimer --;
-    p1Size -=0.005;
+    roundWaitTimer--;
+    p1Size -= 0.005;
     if (roundWaitTimer < 0) {
+      iscountdown = true;
       p1x = 200;
       p2x = 600;
-      roundWaitTimer = 100;
-      p1Size =1;
+      roundWaitTimer = 1000; 
+      p1Size = 1;
       p2win++;
+      countdownTimer = 3;
     }
   }
-  if(p2win==2 || p1win ==2){
+  if (p2win==2 || p1win ==2) {
     mode = GAMEOVER;
-  
   }
-  
-  
 }
 
 
@@ -84,6 +96,9 @@ void player1(int x, float s) {
   pushMatrix();
   //translate
   translate(x, height/2);
+
+
+
 
   scale(s);
   //body
@@ -259,9 +274,29 @@ void scoreBoard() {
   text(p2win, width/2+20, 25);
 }
 
-////////////////////////////feet////////////////////
-void player1Leg (int x){
-pushMatrix();
+//////////////////////////countdown//////////////////////
+void countdown() {
+  if (iscountdown) {
+    countdownFrame++;
+    if (countdownFrame >= 60) {
+      countdownFrame = 0; 
+      countdownTimer--; 
+    }
 
-popMatrix();
+    
+    if (countdownTimer < 1) {
+      iscountdown = false; 
+      // Reset for the next round
+      countdownTimer = 3; 
+      roundWaitTimer = 100;
+      p1Timer = 10;
+      p2Timer = 10; 
+    }
+
+  
+    textSize(100);
+   
+    fill(255, 255, 255, 150); 
+    text(countdownTimer, width / 2, height / 2); 
+  }
 }

@@ -1,4 +1,5 @@
 int mode;
+int i=1;
 final int INTRO   = 0;
 final int GAME    = 1;
 final int GAMEOVER= 2;
@@ -17,6 +18,13 @@ int p2win = 0;
 PFont game;
 PFont introduction;
 int roundWaitTimer = 100;
+int legmoveTimer=100;
+
+
+int countdownTimer = 3;
+boolean iscountdown = false; 
+int countdownDuration = 60; 
+int countdownFrame = 0;
 void setup() {
   size(800, 600);
   mode = INTRO;
