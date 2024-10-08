@@ -15,7 +15,6 @@ class Gif {
     for (int i = 0; i<numFrames; i++) {
       frames[i] = loadImage(pre+i+post);
     }
-    
     w = frames[0].width;
     h = frames[0].height;
   }
@@ -35,13 +34,7 @@ class Gif {
   void show(){
     if(Frame == numFrames) Frame = 0;
     image(frames[Frame],x,y,w,h);
-    
-    int i =100;
-   if(i>0){
-      i--;
-    }if(i<=0){
-      Frame ++;
-      i=100;
-    }
+    if(frameCount % speed ==0) Frame++;
+   
   }
 }
