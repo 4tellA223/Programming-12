@@ -4,10 +4,10 @@ void setup() {
   size(800, 800);
   movers = new ArrayList();
 
-  for (int i = 0; i<movers.size(); i++) {
-    movers.add(new Mover());
-  }
-  
+  //for (int i = 0; i<movers.size(); i++) {
+  //  movers.add(new Mover());
+  //}
+
   for (int i = 0; i<num; i++) {
     movers.add(new Mover());
   }
@@ -21,11 +21,9 @@ void draw() {
     m.act();
     m.show();
     m.connect();
-    
-    if(m.alive==false){
+
+    if (m.alive==false) {
       movers.remove(i);
-    }else{
-    i++;
     }
   }
 }
