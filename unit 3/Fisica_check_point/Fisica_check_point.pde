@@ -6,11 +6,17 @@ color brown  = color(166, 120, 24);
 color green  = color(74, 163, 57);
 color red    = color(224, 80, 61);
 color yellow = color(242, 215, 16);
+int cloudX =300;
+int vx =5;
+int vvx=1;
+int cloudX1 =100;
+
 
 //assets
 PImage redBird;
+PImage dirtImage;
 
-FPoly topPlatform; 
+FPoly topPlatform;
 FPoly bottomPlatform;
 
 //fisica
@@ -19,9 +25,11 @@ FWorld world;
 void setup() {
   //make window
   fullScreen();
-  
+
   //load resources
   redBird = loadImage("red-bird.png");
+  dirtImage = loadImage("Minecraft-Dirt.jpg");
+
 
   //initialise world
   makeWorld();
@@ -65,15 +73,15 @@ void makeBottomPlatform() {
   bottomPlatform = new FPoly();
 
   //plot the vertices of this platform
-  bottomPlatform.vertex(width/2+300 , height/2+100);
+  bottomPlatform.vertex(width/2+300, height/2+100);
   bottomPlatform.vertex(width/2+320, height/2+100);
   bottomPlatform.vertex(width/2+320, height/2+300);
   bottomPlatform.vertex(width/2+700, height/2+300);
   bottomPlatform.vertex(width/2+700, height/2+100);
-   bottomPlatform.vertex(width/2+720, height/2+100);
+  bottomPlatform.vertex(width/2+720, height/2+100);
   bottomPlatform.vertex(width/2+720, height/2+330);
   bottomPlatform.vertex(width/2+300, height/2+330);
-    bottomPlatform.vertex(width/2+300, height/2+100);
+  bottomPlatform.vertex(width/2+300, height/2+100);
 
   // define properties
   bottomPlatform.setStatic(true);
@@ -91,16 +99,26 @@ void draw() {
   println("x: " + mouseX + " y: " + mouseY);
   background(blue);
   if (frameCount % 20 == 0) {  //Every 20 frames ...
-    
+
     makeCircle();
     makeBlob();
     makeBox();
     makeBird();
- 
   }
   world.step();  //get box2D to calculate all the forces and new positions
- clouds();
+
+  //background cloud
+  ellipse(cloudX1, 100, 150, 120);
+  cloudX1+=vvx;
+  if (cloudX1>width+400)cloudX1=-100;
+
+
   world.draw();  //ask box2D to convert this world to processing screen coordinates and draw
+
+  //front cloud
+  ellipse(cloudX, 100, 200, 180);
+  cloudX+=vx;
+  if (cloudX>width+400)cloudX=-100;
 }
 
 
@@ -147,13 +165,18 @@ void makeBlob() {
 //===========================================================================================
 
 void makeBox() {
-  FBox box = new FBox(25, 100);
+  FBox box = new FBox(25, 25);
   box.setPosition(random(width), -5);
 
   //set visuals
   box.setStroke(0);
   box.setStrokeWeight(2);
   box.setFillColor(green);
+
+  //set visual
+  image(dirtImage, 0, 0);
+  dirtImage.resize(25, 25);
+  box.attachImage(dirtImage);
 
   //set physical properties
   box.setDensity(0.2);
@@ -179,19 +202,3 @@ void makeBird() {
 }
 
 //====================================================================================================
-
-void clouds(){
-
-
-  int x =-300;
-  int y =100;
-  int vx =1;
-  fill(255);
-ellipse(300,100,300,40);
-  
-  x+=vx;
-  if(x>=width+300){
-    x =-300;
-  }
-
-}
