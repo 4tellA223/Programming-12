@@ -10,7 +10,10 @@ int cloudX =300;
 int vx =5;
 int vvx=1;
 int cloudX1 =100;
-
+//button
+Button a ,b;
+boolean mouseReleased,wasPressed;
+boolean gravityClick;
 
 //assets
 PImage redBird;
@@ -29,10 +32,12 @@ void setup() {
   //load resources
   redBird = loadImage("red-bird.png");
   dirtImage = loadImage("Minecraft-Dirt.jpg");
-
+  a = new Button("Gravity",200,800,150,100,255,0,gravityClick);
 
   //initialise world
+  if(gravityClick){
   makeWorld();
+  }makeWorld();
 
   //add terrain to world
   makeTopPlatform();
@@ -44,7 +49,13 @@ void setup() {
 void makeWorld() {
   Fisica.init(this);
   world = new FWorld();
-  world.setGravity(0, 900);
+  
+  //gravity
+  if(gravityClick){
+  world.setGravity(0, 0);
+  }else{
+    world.setGravity(0,900);
+  }
 }
 
 //===========================================================================================
@@ -108,17 +119,22 @@ void draw() {
   world.step();  //get box2D to calculate all the forces and new positions
 
   //background cloud
+  fill(255);
   ellipse(cloudX1, 100, 150, 120);
   cloudX1+=vvx;
   if (cloudX1>width+400)cloudX1=-100;
 
-
+ 
   world.draw();  //ask box2D to convert this world to processing screen coordinates and draw
 
   //front cloud
   ellipse(cloudX, 100, 200, 180);
   cloudX+=vx;
   if (cloudX>width+400)cloudX=-100;
+  
+  //front button
+   click();
+   a.show();
 }
 
 
@@ -181,7 +197,7 @@ void makeBox() {
   //set physical properties
   box.setDensity(0.2);
   box.setFriction(1);
-  box.setRestitution(0.25);
+  box.setRestitution(1);
   world.add(box);
 }
 
