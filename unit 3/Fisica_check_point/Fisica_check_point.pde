@@ -12,7 +12,7 @@ int vvx=1;
 int cloudX1 =100;
 //button
 Button a, b;
-boolean mouseReleased, wasPressed,Fbody;
+boolean mouseReleased, wasPressed, Fbody;
 int g =900;
 
 
@@ -34,11 +34,11 @@ void setup() {
   redBird = loadImage("red-bird.png");
   dirtImage = loadImage("Minecraft-Dirt.jpg");
   a = new Button("Gravity", 200, 800, 150, 100, 255, 0);
-  b =new Button("FBodies",500,800,150,100,255,0);
+  b =new Button("FBodies", 500, 800, 150, 100, 255, 0);
   Fbody = true;
-  
+
   //initialise world
-  
+
   makeWorld();
 
   //add terrain to world
@@ -54,8 +54,7 @@ void makeWorld() {
 
   //gravity
 
-    world.setGravity(0, 900);
- 
+  world.setGravity(0, 900);
 }
 
 //===========================================================================================
@@ -109,7 +108,7 @@ void makeBottomPlatform() {
 void draw() {
   println("x: " + mouseX + " y: " + mouseY);
   background(blue);
-  if (frameCount % 20 == 0 && Fbody) {  //Every 20 frames ...
+  if (frameCount % 20 == 0) {  //Every 20 frames ...
 
     makeCircle();
     makeBlob();
@@ -136,7 +135,6 @@ void draw() {
   mouseReleased();
   b.show();
   a.show();
-   
 }
 
 
@@ -157,7 +155,8 @@ void makeCircle() {
   circle.setRestitution(1);
 
   //add to world
-  world.add(circle);
+  if (Fbody)
+    world.add(circle);
 }
 
 //===========================================================================================
@@ -177,7 +176,7 @@ void makeBlob() {
   blob.setRestitution(0.25);
 
   //add to the world
-  world.add(blob);
+  if (Fbody)world.add(blob);
 }
 
 //===========================================================================================
@@ -200,7 +199,7 @@ void makeBox() {
   box.setDensity(0.2);
   box.setFriction(1);
   box.setRestitution(1);
-  world.add(box);
+  if (Fbody)world.add(box);
 }
 
 //===========================================================================================
@@ -216,7 +215,7 @@ void makeBird() {
   bird.setDensity(0.8);
   bird.setFriction(1);
   bird.setRestitution(0.5);
-  world.add(bird);
+  if (Fbody)world.add(bird);
 }
 
 //====================================================================================================
