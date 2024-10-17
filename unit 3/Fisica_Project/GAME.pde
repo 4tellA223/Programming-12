@@ -1,20 +1,28 @@
+//colour
 color sky = #5AB8D3;
 color red = #DE001A;
+color green = #1A812C;
+
 boolean makeBall = true;
 
+//players
+PImage player1Img;
+
 //assets
-FPoly topPlatform;
+FPoly ground;
 FPoly basket;
 
 void game() {
   background(sky);
-  if (frameCount % 20 == 0) {  //Every 20 frames ...
-    player1();
-  }
-  //ball
+  //setup
+  player1Img = loadImage("Player1.png");
+  
+  //functions
   if (makeBall) {
     ball();
-    basket();
+    basketRight();
+    player1();
+    groundGrass();
     makeBall=false;
   }
 
@@ -24,11 +32,22 @@ void game() {
 
 //=======================================================================================
 void player1() {
-  pushMatrix();
-  //translate
-  translate(100, 100);
+  //setups
+  FBox player1 = new FBox(125,125);
+  player1.setPosition(width/2-200,height/2);
+  
+  //set visuals
+  image(player1Img,0,0);
+  player1.attachImage(player1Img);
+  player1Img.resize(105,125);
+   
+   //set physical properties
+  player1.setDensity(0.8);
+  player1.setFriction(1);
+  player1.setRestitution(0.4);
+  player1.setGrabable(false);
+  world.add(player1);
 
-  popMatrix();
 }
 //==========================================================================================
 void ball() {
@@ -51,25 +70,49 @@ void makeWorld() {
   world.setGravity(0, 900);
 }
 //======================================================================================
-void basket() {
-basket = new FPoly();
+
+void basketRight() {
+  pushMatrix();
+  basket = new FPoly();
+  basket.setPosition(width-70, height/2);
 
   //plot the vertices of this platform
-basket.vertex(0, 0);
-basket.vertex(0, 20);
-basket.vertex(20, 20);
-basket.vertex(20, 0);
-basket.vertex(30, 0);
-basket.vertex(30, 30);
-basket.vertex(-10, 30);
-basket.vertex(-10, 0);
-basket.vertex(0, 0);
+  basket.vertex(0, 0);
+  basket.vertex(0, 30);
+  basket.vertex(50, 30);
+  basket.vertex(50, 0);
+  basket.vertex(60, 0);
+  basket.vertex(60, 40);
+  basket.vertex(-10, 40);
+  basket.vertex(-10, 0);
+  basket.vertex(0, 0);
 
   // define properties
-basket.setStatic(true);
-basket.setFillColor(red);
-basket.setFriction(0);
+  basket.setStatic(true);
+  basket.setFillColor(red);
+  basket.setFriction(0);
 
   //put it in the world
   world.add(basket);
+  popMatrix();
+}
+//==================================================================================
+
+void groundGrass(){
+ ground = new FPoly();
+
+  //plot the vertices of this platform
+  ground.vertex(0, height-100);
+  ground.vertex(width, height-100);
+  ground.vertex(width, height);
+  ground.vertex(0, height);
+
+  // define properties
+  ground.setStatic(true);
+  ground.setFillColor(green);
+  ground.setFriction(0.1);
+
+  //put it in the world
+  world.add(ground);
+
 }

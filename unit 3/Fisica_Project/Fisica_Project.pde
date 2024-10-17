@@ -10,6 +10,7 @@ final int GAMEOVER = 3;
 FWorld world;
 
 void setup() {
+ //imageMode(CENTER);
   MODE = GAME;
   fullScreen();
   createWorld();
