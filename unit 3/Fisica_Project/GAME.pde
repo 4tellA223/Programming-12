@@ -7,6 +7,8 @@ boolean makeBall = true;
 
 //players
 PImage player1Img;
+float player1_vx, player1_vy;
+FBox player1;
 
 //assets
 FPoly ground;
@@ -17,6 +19,11 @@ void game() {
   //setup
   player1Img = loadImage("Player1.png");
   
+  if (frameCount % 4 == 0) {  //Every 20 frames ...
+   MovingPlayer();
+  }
+
+
   //functions
   if (makeBall) {
     ball();
@@ -33,19 +40,19 @@ void game() {
 //=======================================================================================
 void player1() {
   //setups
-  FBox player1 = new FBox(125,125);
-  player1.setPosition(width/2-200,height/2);
-  
+   player1 = new FBox(125, 125);
+  player1.setPosition(width/2-200, height/2);
+
   //set visuals
-  image(player1Img,0,0);
+  image(player1Img, 0, 0);
   player1.attachImage(player1Img);
-  player1Img.resize(105,125);
-   
-   //set physical properties
+  player1Img.resize(105, 125);
+
+  //set physical properties
   player1.setDensity(0.8);
   player1.setFriction(1);
   player1.setRestitution(0.4);
-  player1.setGrabable(false);
+  player1.setGrabbable(false);
   world.add(player1);
 
 }
@@ -55,8 +62,8 @@ void ball() {
   ball.setPosition(width/2, height/2);
 
   //physical properties
-  ball.setDensity(0.8);
-  ball.setFriction(1);
+  ball.setDensity(0.1);
+  ball.setFriction(0.1);
   ball.setRestitution(0.9);
   world.add(ball);
 }
@@ -74,16 +81,16 @@ void makeWorld() {
 void basketRight() {
   pushMatrix();
   basket = new FPoly();
-  basket.setPosition(width-70, height/2);
+  basket.setPosition(width-100, height/2);
 
   //plot the vertices of this platform
   basket.vertex(0, 0);
-  basket.vertex(0, 30);
-  basket.vertex(50, 30);
-  basket.vertex(50, 0);
-  basket.vertex(60, 0);
-  basket.vertex(60, 40);
-  basket.vertex(-10, 40);
+  basket.vertex(0, 60);
+  basket.vertex(80, 60);
+  basket.vertex(80, 0);
+  basket.vertex(100, 0);
+  basket.vertex(100, 70);
+  basket.vertex(-10, 70);
   basket.vertex(-10, 0);
   basket.vertex(0, 0);
 
@@ -91,6 +98,7 @@ void basketRight() {
   basket.setStatic(true);
   basket.setFillColor(red);
   basket.setFriction(0);
+  basket.setGrabbable(false);
 
   //put it in the world
   world.add(basket);
@@ -98,8 +106,8 @@ void basketRight() {
 }
 //==================================================================================
 
-void groundGrass(){
- ground = new FPoly();
+void groundGrass() {
+  ground = new FPoly();
 
   //plot the vertices of this platform
   ground.vertex(0, height-100);
@@ -114,5 +122,14 @@ void groundGrass(){
 
   //put it in the world
   world.add(ground);
-
 }
+//=====================================================================================
+ void MovingPlayer() {
+    //moving
+  float player1_vx = player1.getVelocityX();
+  float player1_vy = player1.getVelocityY();
+  
+  if(dkey) player1.setVelocity(100,player1_vx);
+  if(akey) player1.setVelocity(-100,player1_vx);
+  if(wkey) player1.setVelocity(player1_vy,-500);
+  }
