@@ -1,5 +1,5 @@
 import fisica.*;
-boolean wkey,akey,dkey,upkey,leftkey, rightkey;
+boolean wkey,akey,dkey,skey,upkey,leftkey, rightkey,downkey;
 
 //mode framework
 int MODE;
@@ -17,7 +17,9 @@ void setup() {
   createBodies();
 }
 void draw(){
-
+  world.setGravity(0, 0);
+  
+  
   if (MODE == INTRO) {
    intro();
   } else if (MODE == GAME) {
