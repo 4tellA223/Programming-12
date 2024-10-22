@@ -1,5 +1,5 @@
 import fisica.*;
-boolean wkey,akey,dkey,skey,upkey,leftkey, rightkey,downkey;
+boolean wkey, akey, dkey, skey, upkey, leftkey, rightkey, downkey;
 
 //mode framework
 int MODE;
@@ -10,25 +10,26 @@ final int GAMEOVER = 3;
 FWorld world;
 
 void setup() {
- //imageMode(CENTER);
+  //imageMode(CENTER);
   MODE = GAME;
   fullScreen();
   createWorld();
   createBodies();
 }
-void draw(){
+void draw() {
   world.setGravity(0, 0);
-  
-  
-  if (MODE == INTRO) {
-   intro();
-  } else if (MODE == GAME) {
-    game();
-  } else if (MODE ==GAMEOVER) {
-    gameover();
-  } else {
-    println("ERROR: MODE DNE, MODE + "+MODE);
-  }
+ 
+
+
+if (MODE == INTRO) {
+  intro();
+} else if (MODE == GAME) {
+  game();
+} else if (MODE ==GAMEOVER) {
+  gameover();
+} else {
+  println("ERROR: MODE DNE, MODE + "+MODE);
+}
 }
 
 void createWorld() {
@@ -39,7 +40,5 @@ void createWorld() {
   world.setEdges();
 }
 
-void createBodies(){
-
-
+void createBodies() {
 }

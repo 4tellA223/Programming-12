@@ -7,13 +7,15 @@ color blue = #004DCE;
 boolean makeBall = true;
 
 //players
-PImage player1Img, player2Img,ballImg;
-float player1_vx, player1_vy,player2_vx,player2_vy;
-FBox player1,player2;
+PImage player1Img, player2Img, ballImg;
+float player1_vx, player1_vy, player2_vx, player2_vy;
+FBox player1, player2;
+FCircle ball;
+int score1 = 0, score2 =0;
 
 //assets
 FPoly ground;
-FPoly basket;
+FBox basket1, basket2;
 
 void game() {
   background(sky);
@@ -22,8 +24,14 @@ void game() {
   player2Img = loadImage("Player2.png");
   ballImg = loadImage("ball.png");
 
-  if (frameCount % 4 == 0) {  //Every 20 frames ...
+  if (frameCount % 2 == 0) {  //Every 20 frames ...
     MovingPlayer();
+    if (hitGround(basket1)) {
+      reset();
+    }
+    if (hitGround(basket2)) {
+      reset();
+    }
   }
 
 
@@ -41,6 +49,7 @@ void game() {
   world.step();
   world.draw();
 }
+
 
 //=======================================================================================
 void player1() {
@@ -82,7 +91,7 @@ void player2() {
 }
 //==========================================================================================
 void ball() {
-  FCircle ball = new FCircle(80);
+  ball = new FCircle(80);
   ball.setPosition(width/2, height/2);
 
   //set visuals
@@ -110,46 +119,46 @@ void makeWorld() {
 
 void basketRight() {
   pushMatrix();
-  basket = new FPoly();
-  basket.setPosition(width-10, height/2-300);
+  basket1 = new FBox(10, 300);
+  basket1.setPosition(width-10, height/2);
 
   //plot the vertices of this platform
-  basket.vertex(0,0);
-  basket.vertex(0,300);
-  basket.vertex(10,300);
-  basket.vertex(10,0);
-  
+  //basket.vertex(0,0);
+  //basket.vertex(0,300);
+  //basket.vertex(10,300);
+  //basket.vertex(10,0);
+
   // define properties
-  basket.setStatic(true);
-  basket.setFillColor(red);
-  basket.setFriction(0);
-  basket.setGrabbable(false);
+  basket1.setStatic(true);
+  basket1.setFillColor(red);
+  basket1.setFriction(0);
+  basket1.setGrabbable(false);
 
   //put it in the world
-  world.add(basket);
+  world.add(basket1);
   popMatrix();
 }
 //=========================================================================================
 void basketLeft() {
   pushMatrix();
-  basket = new FPoly();
-  basket.setPosition(5, height/2-300);
+  basket2 = new FBox(10, 300);
+  basket2.setPosition(5, height/2);
 
   //plot the vertices of this platform
- basket.vertex(0,0);
-  basket.vertex(0,300);
-  basket.vertex(10,300);
-  basket.vertex(10,0);
-  
+  //basket.vertex(0,0);
+  // basket.vertex(0,300);
+  // basket.vertex(10,300);
+  // basket.vertex(10,0);
+
 
   // define properties
-  basket.setStatic(true);
-  basket.setFillColor(blue);
-  basket.setFriction(0);
-  basket.setGrabbable(false);
+  basket2.setStatic(true);
+  basket2.setFillColor(blue);
+  basket2.setFriction(0);
+  basket2.setGrabbable(false);
 
   //put it in the world
-  world.add(basket);
+  world.add(basket2);
   popMatrix();
 }
 //==================================================================================
@@ -174,19 +183,35 @@ void groundGrass() {
 //=====================================================================================
 void MovingPlayer() {
   //moving
+  float player2_vx = player2.getVelocityX();
+  float player2_vy = player2.getVelocityY();
+
+  if (dkey) player2.setVelocity(450, player2_vy);
+  if (akey) player2.setVelocity(-450, player2_vy);
+  if (wkey) player2.setVelocity(player2_vx, -550);
+  if (skey) player2.setVelocity(player2_vx, 550);
+
   float player1_vx = player1.getVelocityX();
   float player1_vy = player1.getVelocityY();
 
-  if (dkey) player1.setVelocity(250, player1_vy);
-  if (akey) player1.setVelocity(-250, player1_vy);
-  if (wkey) player1.setVelocity(player1_vx, -550);
-  if (skey) player1.setVelocity(player1_vx, 550);
-  
-   float player2_vx = player2.getVelocityX();
-  float player2_vy = player2.getVelocityY();
+  if (rightkey) player1.setVelocity(200, player1_vy);
+  if (leftkey) player1.setVelocity(-200, player1_vy);
+  if (upkey) player1.setVelocity(player1_vx, -450);
+  if (downkey) player1.setVelocity(player1_vx, 450);
+}
+//======================================================================================
+boolean hitGround(FBox ground) {
+  ArrayList<FContact> contactList = ball.getContacts();
+  for (int i =0; i<contactList.size(); i++) {
+    FContact myContact = contactList.get(i);
+    if (myContact.contains(ground))
+      return true;
+  }
+  return false;
+}
 
-  if (rightkey) player2.setVelocity(350, player2_vy);
-  if (leftkey) player2.setVelocity(-350, player2_vy);
-  if (upkey) player2.setVelocity(player2_vx, -650);
-  if (downkey) player2.setVelocity(player2_vx, 650);
+void reset() {
+  player1.setPosition(width/2+200, height/2);
+  player2.setPosition(width/2-200, height/2);
+   ball.setPosition(width/2, height/2);
 }
