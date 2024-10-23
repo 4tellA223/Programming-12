@@ -11,7 +11,7 @@ PImage player1Img, player2Img, ballImg;
 float player1_vx, player1_vy, player2_vx, player2_vy;
 FBox player1, player2;
 FCircle ball;
-int score1 = 0, score2 =0;
+
 
 //assets
 FPoly ground;
@@ -28,12 +28,19 @@ void game() {
     MovingPlayer();
     if (hitGround(basket1)) {
       reset();
+      score1++;
+      
     }
     if (hitGround(basket2)) {
       reset();
+      score2++;
     }
   }
-
+  
+  if(score1 ==2 || score2 ==2){
+    MODE=GAMEOVER;
+  }
+  
 
   //functions
   if (makeBall) {
@@ -45,7 +52,7 @@ void game() {
     groundGrass();
     makeBall=false;
   }
-
+  
   world.step();
   world.draw();
 }
@@ -101,7 +108,7 @@ void ball() {
 
 
   //physical properties
-  ball.setDensity(0.1);
+  ball.setDensity(0.4);
   ball.setFriction(0.1);
   ball.setRestitution(0.9);
   world.add(ball);
@@ -118,7 +125,6 @@ void makeWorld() {
 //======================================================================================
 
 void basketRight() {
-  pushMatrix();
   basket1 = new FBox(10, 300);
   basket1.setPosition(width-10, height/2);
 
@@ -132,15 +138,14 @@ void basketRight() {
   basket1.setStatic(true);
   basket1.setFillColor(red);
   basket1.setFriction(0);
+  basket1.setSensor(true);
   basket1.setGrabbable(false);
 
   //put it in the world
   world.add(basket1);
-  popMatrix();
 }
 //=========================================================================================
 void basketLeft() {
-  pushMatrix();
   basket2 = new FBox(10, 300);
   basket2.setPosition(5, height/2);
 
@@ -155,11 +160,11 @@ void basketLeft() {
   basket2.setStatic(true);
   basket2.setFillColor(blue);
   basket2.setFriction(0);
+  basket2.setSensor(true);
   basket2.setGrabbable(false);
 
   //put it in the world
   world.add(basket2);
-  popMatrix();
 }
 //==================================================================================
 
@@ -212,6 +217,10 @@ boolean hitGround(FBox ground) {
 
 void reset() {
   player1.setPosition(width/2+200, height/2);
+  player1.setVelocity(0, 0);
   player2.setPosition(width/2-200, height/2);
+  player2.setVelocity(0, 0);
    ball.setPosition(width/2, height/2);
+   ball.setAngularVelocity(0);
+   ball.setVelocity(0, 0);
 }

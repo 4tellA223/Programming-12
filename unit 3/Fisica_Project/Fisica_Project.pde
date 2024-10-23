@@ -1,5 +1,9 @@
 import fisica.*;
 boolean wkey, akey, dkey, skey, upkey, leftkey, rightkey, downkey;
+int score1 = 0, score2 =0;
+
+//font
+PFont game;
 
 //mode framework
 int MODE;
@@ -15,6 +19,7 @@ void setup() {
   fullScreen();
   createWorld();
   createBodies();
+   game = createFont("Games.ttf",128);
 }
 void draw() {
   world.setGravity(0, 0);
