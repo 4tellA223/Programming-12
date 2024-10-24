@@ -1,5 +1,3 @@
-//PImage introBackground;
-
 void intro() {
   
 background(0);

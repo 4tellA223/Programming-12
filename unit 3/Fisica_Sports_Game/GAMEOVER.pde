@@ -1,8 +1,5 @@
-PImage backgroundImg;
-
 void gameover() {
   textFont(game);
-  backgroundImg= loadImage("background.jpg");
   image(backgroundImg, 0, 0, width, height);
 
   if (score1 ==2) {
@@ -15,6 +12,7 @@ void gameover() {
     text("WINNER IS PLAYER2!", 150, height/2);
   }
 }
+
 void gameoverClick() {
   if (mouseX>0 && mouseX<width&& mouseY>0 && mouseY<height) {
       score1 = 0;
