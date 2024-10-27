@@ -5,11 +5,11 @@ void gameover() {
   if (score1 ==2) {
     textSize(128);
     fill(#292EFF);
-    text("WINNER IS PLAYER1!", 150, height/2);
+    text("WINNER IS PLAYER1!", width/2, height/2);
   } else if (score2 ==2) {
     textSize(128);
     fill(#292EFF);
-    text("WINNER IS PLAYER2!", 150, height/2);
+    text("WINNER IS PLAYER2!", width/2, height/2);
   }
 }
 

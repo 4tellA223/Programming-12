@@ -1,6 +1,13 @@
 void intro() {
-  
-background(0);
+ image(introBackground, 0, 0, width, height);
+  textFont(game);
+   textSize(128);
+    fill(#9ADEDC);
+    text("FISICA SPORTS GAME", width/2, height/2-200);
+    
+    textSize(textsize);
+    text("Click any where to start",width/2, height/2);
+
 
 }
 void introClick(){

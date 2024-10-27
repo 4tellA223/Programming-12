@@ -2,6 +2,8 @@ import fisica.*;
 
 boolean wkey, akey, dkey, skey, upkey, leftkey, rightkey, downkey;
 int score1 = 0, score2 =0;
+float textsize = 28;
+
 
 //font
 PFont game;
@@ -37,6 +39,7 @@ FPoly ground;
 FBox basket1, basket2;
 
 void setup() {
+  textAlign(CENTER, CENTER);
   fullScreen();
   createWorld();
   MODE = INTRO;
@@ -74,15 +77,20 @@ void groundGrass() {
 }
 
 void draw() {
-  if (MODE == INTRO) {
-    intro();
-  } else if (MODE == GAME) {
-    game();
-  } else if (MODE ==GAMEOVER) {
-    gameover();
-  } else {
-    println("ERROR: MODE DNE, MODE + "+MODE);
-  }
+
+  
+
+
+
+if (MODE == INTRO) {
+  intro();
+} else if (MODE == GAME) {
+  game();
+} else if (MODE ==GAMEOVER) {
+  gameover();
+} else {
+  println("ERROR: MODE DNE, MODE + "+MODE);
+}
 }
 
 void createWorld() {
