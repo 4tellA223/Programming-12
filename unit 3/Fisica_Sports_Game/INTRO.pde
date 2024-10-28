@@ -1,5 +1,6 @@
 void intro() {
- image(introBackground, 0, 0, width, height);
+ 
+  introbackground.show();
   textFont(game);
    textSize(128);
     fill(#9ADEDC);

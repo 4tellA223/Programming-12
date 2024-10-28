@@ -27,7 +27,8 @@ boolean makeAssets = true;
 
 //image
 PImage player1Img, player2Img, ballImg;
-PImage backgroundImg, introBackground;
+PImage backgroundImg;
+Gif introbackground;
 
 //players
 float player1_vx, player1_vy, player2_vx, player2_vy;
@@ -49,9 +50,11 @@ void setup() {
   player2Img = loadImage("Player2.png");
   ballImg = loadImage("ball.png");
   backgroundImg= loadImage("background.jpg");
+  
+  introbackground = new Gif("frame_","_delay-0.07s.gif",15,2,0,0,width,height);
 
   game = createFont("Games.ttf", 128);
-  introBackground = loadImage("Intro.jpg");
+  
 
   groundGrass();
 }
