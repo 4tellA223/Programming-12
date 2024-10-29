@@ -8,7 +8,7 @@ void gameover() {
     text("WINNER IS PLAYER1!", width/2, height/2);
   } else if (score2 ==2) {
     textSize(128);
-    fill(#292EFF);
+    fill(#FF676C);
     text("WINNER IS PLAYER2!", width/2, height/2);
   }
 }

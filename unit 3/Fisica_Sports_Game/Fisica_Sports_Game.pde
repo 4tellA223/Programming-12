@@ -24,6 +24,7 @@ color green = #1A812C;
 color blue = #004DCE;
 
 boolean makeAssets = true;
+boolean touchBall = false;
 
 //image
 PImage player1Img, player2Img, ballImg;
@@ -31,7 +32,7 @@ PImage backgroundImg;
 Gif introbackground;
 
 //players
-float player1_vx, player1_vy, player2_vx, player2_vy;
+float player1_vx, player1_vy, player2_vx, player2_vy,ball_vx,ball_vy;
 FBox player1, player2;
 FCircle ball;
 
