@@ -32,38 +32,37 @@ void game() {
     score2++;
   }
 
-  ball_vx = ball.getVelocityX();
-  ball_vy = ball.getVelocityY();
-  int vy;
-  int kick = 3;
-  if (kick(player1)) {
-    if (kick%2==0) {
-      vy=-1050;
-      ball.setVelocity(ball_vx, vy );
-      player1.setVelocity(-450, 0);
-      kick ++;
-    }
-    if (kick%3==0) {
-      vy=1050;
-      ball.setVelocity(ball_vx, vy );
-      player1.setVelocity(-450, 0);
-      kick ++;
-    }
-  }
-  if (kick(player2)) {
-    if (kick%2==0) {
-      vy=1050;
-      ball.setVelocity(ball_vx, vy);
-      player2.setVelocity(-450, 0);
-      kick ++;
-    }
-    if (kick%3==0) {
-      vy=-1050;
-      ball.setVelocity(ball_vx, vy);
-      player2.setVelocity(-450, 0);
-      kick ++;
-    }
-  }
+
+  //int vy;
+  //int kick = 3;
+  //if (kick(player1)) {
+  //  if (kick%2==0) {
+  //    vy=-1050;
+  //    ball.setVelocity(ball_vx, vy );
+  //    player1.setVelocity(-450, 0);
+  //    kick ++;
+  //  }
+  //  if (kick%3==0) {
+  //    vy=1050;
+  //    ball.setVelocity(ball_vx, vy );
+  //    player1.setVelocity(-450, 0);
+  //    kick ++;
+  //  }
+  //}
+  //if (kick(player2)) {
+  //  if (kick%2==0) {
+  //    vy=1050;
+  //    ball.setVelocity(ball_vx, vy);
+  //    player2.setVelocity(-450, 0);
+  //    kick ++;
+  //  }
+  //  if (kick%3==0) {
+  //    vy=-1050;
+  //    ball.setVelocity(ball_vx, vy);
+  //    player2.setVelocity(-450, 0);
+  //    kick ++;
+  //  }
+  //}
 
   if (score1 ==2 || score2 ==2) {
     MODE=GAMEOVER;
@@ -178,23 +177,75 @@ void MovingPlayer() {
   //moving
   player2_vx = player2.getVelocityX();
   player2_vy = player2.getVelocityY();
+  //ball
+  ball_vx = ball.getVelocityX();
+  ball_vy = ball.getVelocityY();
 
-  if (dkey) player2.setVelocity(450, 0);
-  if (akey) player2.setVelocity(-450, 0);
-  if (wkey) player2.setVelocity(0, -550);
-  if (skey) player2.setVelocity(0, 550);
+  if (dkey) {
+    player2.setVelocity(450, 0);
+    if (kick(player2)) {
+      ball.setVelocity(ball_vx, 1000 );
+      player2.setVelocity(-1000, player2_vy);
+    }
+  }
+  
+  if (akey) {
+    player2.setVelocity(-450, 0);
+    if (kick(player2)) {
+      ball.setVelocity(ball_vx, 1000 );
+      player2.setVelocity(1000, player2_vy);
+    }
+  }
+  
+  if (wkey) {
+    player2.setVelocity(0, -550);
+    if (kick(player2)) {
+      ball.setVelocity(1000, ball_vy );
+      player2.setVelocity(ball_vx, 1000);
+    }
+  }
+  
+  if (skey) {
+    player2.setVelocity(0, 550);
+    if (kick(player2)) {
+      ball.setVelocity(-1000, ball_vy );
+      player2.setVelocity(ball_vx, -1000);
+    }
+  }
 
   player1_vx = player1.getVelocityX();
   player1_vy = player1.getVelocityY();
 
-  if (rightkey) player1.setVelocity(200, 0);
-  if (leftkey) player1.setVelocity(-200, 0);
-  if (upkey) player1.setVelocity(0, -450);
-  if (downkey) player1.setVelocity(0, 450);
+  if (rightkey) {
+    player1.setVelocity(200, 0);
+    if (kick(player1)) {
+      ball.setVelocity(ball_vx, 1000 );
+      player1.setVelocity(-1000, 10);
+    }
+  }
+  if (leftkey){
+    player1.setVelocity(-200, 0);
+    if (kick(player1)) {
+      ball.setVelocity(ball_vx, 1000 );
+      player1.setVelocity(1000, 10);
+    }
+  } 
+  if (upkey) {
+    player1.setVelocity(0, -450);
+    if (kick(player1)) {
+      ball.setVelocity(1000, ball_vy );
+      player1.setVelocity(10, -1000);
+    }
+  }
+  if (downkey) {
+    player1.setVelocity(0, 450);
+    if (kick(player1)) {
+      ball.setVelocity(-1000, ball_vy );
+      player1.setVelocity(10, 1000);
+    }
+  }
 }
 //==========================================================================================
-void movingBall() {
-}
 
 //======================================================================================
 boolean hitGround(FBox ground) {
