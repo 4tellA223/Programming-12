@@ -1,84 +1,73 @@
+//colour
+color sky = #5AB8D3;
+color red = #DE001A;
+color green = #1A812C;
+color blue = #004DCE;
+
+boolean makeAssets = true;
+
+//players
+PImage player1Img, player2Img, ballImg;
+float player1_vx, player1_vy, player2_vx, player2_vy;
+FBox player1, player2;
+FCircle ball;
+
+
+//assets
+FPoly ground;
+FBox basket1, basket2;
+
 void game() {
   background(sky);
-  textFont(game);
-  textSize(50);
-  fill(#292EFF);
-  text(score1, width/2-30, 30);
-  fill(#9ADEDC);
-  text(":", width/2, 30);
-  fill(#FF676C);
-  text(score2, width/2+30, 30);
+  //setup
+  player1Img = loadImage("Player1.png");
+  player2Img = loadImage("Player2.png");
+  ballImg = loadImage("ball.png");
+  
+  player2 = new FBox(55, 105);
+  player1 = new FBox(125, 125);
+  ball = new FCircle(80);
+
+    MovingPlayer();
+  if(frameCount % 2==0){
+    if (hitGround(basket1)) {
+      reset();
+      score1++;
+    }
+    if (hitGround(basket2)) {
+      reset();
+      score2++;
+    }
+  }
+  if (score1 ==2 || score2 ==2) {
+    MODE=GAMEOVER;
+  }
 
 
-
-
+  //functions
   if (makeAssets) {
     makeBall();
     basketRight();
     basketLeft();
-    makePlayer1();
-    makePlayer2();
-
+    player1();
+    player2();
+    groundGrass();
     makeAssets=false;
-  }
-
-  MovingPlayer();
-  if (hitGround(basket1)) {
-    reset();
-    score1++;
-  }
-  if (hitGround(basket2)) {
-    reset();
-    score2++;
-  }
-
-
-  //int vy;
-  //int kick = 3;
-  //if (kick(player1)) {
-  //  if (kick%2==0) {
-  //    vy=-1050;
-  //    ball.setVelocity(ball_vx, vy );
-  //    player1.setVelocity(-450, 0);
-  //    kick ++;
-  //  }
-  //  if (kick%3==0) {
-  //    vy=1050;
-  //    ball.setVelocity(ball_vx, vy );
-  //    player1.setVelocity(-450, 0);
-  //    kick ++;
-  //  }
-  //}
-  //if (kick(player2)) {
-  //  if (kick%2==0) {
-  //    vy=1050;
-  //    ball.setVelocity(ball_vx, vy);
-  //    player2.setVelocity(-450, 0);
-  //    kick ++;
-  //  }
-  //  if (kick%3==0) {
-  //    vy=-1050;
-  //    ball.setVelocity(ball_vx, vy);
-  //    player2.setVelocity(-450, 0);
-  //    kick ++;
-  //  }
-  //}
-
-  if (score1 ==3 || score2 ==3) {
-    MODE=GAMEOVER;
   }
 
   world.step();
   world.draw();
 }
 
+
 //=======================================================================================
-void makePlayer1() {
+void player1() {
   //setups
-  player1 = new FBox(105, 125);
+  
   player1.setPosition(width/2+200, height/2);
 
   //set visuals
+  image(player1Img, 0, 0);
   player1.attachImage(player1Img);
   player1Img.resize(105, 125);
 
@@ -90,14 +79,14 @@ void makePlayer1() {
   player1.setRotatable(false);
   world.add(player1);
 }
-
 //====================================================================================================
-void makePlayer2() {
+void player2() {
   //setups
-  player2 = new FBox(65, 95);
+  
   player2.setPosition(width/2-200, height/2);
 
   //set visuals
+  image(player2Img, 0, 0);
   player2.attachImage(player2Img);
   player2Img.resize(105, 125);
 
@@ -109,10 +98,9 @@ void makePlayer2() {
   player2.setRotatable(false);
   world.add(player2);
 }
-
 //==========================================================================================
 void makeBall() {
-  ball = new FCircle(80);
+  
   ball.setPosition(width/2, height/2);
 
   //set visuals
@@ -126,6 +114,14 @@ void makeBall() {
   world.add(ball);
 }
 
+//===========================================================================================
+
+void makeWorld() {
+  Fisica.init(this);
+  world = new FWorld();
+  //gravity
+  world.setGravity(0, 0);
+}
 //======================================================================================
 
 void basketRight() {
@@ -148,7 +144,6 @@ void basketRight() {
   //put it in the world
   world.add(basket1);
 }
-
 //=========================================================================================
 void basketLeft() {
   basket2 = new FBox(10, 300);
@@ -171,82 +166,44 @@ void basketLeft() {
   //put it in the world
   world.add(basket2);
 }
+//==================================================================================
 
+void groundGrass() {
+  ground = new FPoly();
+
+  //plot the vertices of this platform
+  ground.vertex(0, height-100);
+  ground.vertex(width, height-100);
+  ground.vertex(width, height);
+  ground.vertex(0, height);
+
+  // define properties
+  ground.setStatic(true);
+  ground.setFillColor(green);
+  ground.setFriction(0.1);
+
+  //put it in the world
+  world.add(ground);
+}
 //=====================================================================================
 void MovingPlayer() {
   //moving
   player2_vx = player2.getVelocityX();
   player2_vy = player2.getVelocityY();
-  //ball
-  ball_vx = ball.getVelocityX();
-  ball_vy = ball.getVelocityY();
 
-  if (dkey) {
-    player2.setVelocity(450, 0);
-    if (kick(player2)) {
-      ball.setVelocity(450, 1000 );
-      player2.setVelocity(-1000, player2_vy);
-    }
-  }
-  
-  if (akey) {
-    player2.setVelocity(-450, 0);
-    if (kick(player2)) {
-      ball.setVelocity(-450, 1000 );
-      player2.setVelocity(1000, player2_vy);
-    }
-  }
-  
-  if (wkey) {
-    player2.setVelocity(0, -550);
-    if (kick(player2)) {
-      ball.setVelocity(1000, -500 );
-      player2.setVelocity(ball_vx, 1000);
-    }
-  }
-  
-  if (skey) {
-    player2.setVelocity(0, 550);
-    if (kick(player2)) {
-      ball.setVelocity(-1000, 550 );
-      player2.setVelocity(ball_vx, -1000);
-    }
-  }
+  if (dkey) player2.setVelocity(450, player2_vy);
+  if (akey) player2.setVelocity(-450, player2_vy);
+  if (wkey) player2.setVelocity(player2_vx, -550);
+  if (skey) player2.setVelocity(player2_vx, 550);
 
   player1_vx = player1.getVelocityX();
   player1_vy = player1.getVelocityY();
 
-  if (rightkey) {
-    player1.setVelocity(400, 0);
-    if (kick(player1)) {
-      ball.setVelocity(400, 1000 );
-      player1.setVelocity(-1000, 10);
-    }
-  }
-  if (leftkey){
-    player1.setVelocity(-400, 0);
-    if (kick(player1)) {
-      ball.setVelocity(-400, 1000 );
-      player1.setVelocity(1000, 10);
-    }
-  } 
-  if (upkey) {
-    player1.setVelocity(0, -450);
-    if (kick(player1)) {
-      ball.setVelocity(1000, -450 );
-      player1.setVelocity(10, -1000);
-    }
-  }
-  if (downkey) {
-    player1.setVelocity(0, 450);
-    if (kick(player1)) {
-      ball.setVelocity(-1000, 450 );
-      player1.setVelocity(10, 1000);
-    }
-  }
+  if (rightkey) player1.setVelocity(200, player1_vy);
+  if (leftkey) player1.setVelocity(-200, player1_vy);
+  if (upkey) player1.setVelocity(player1_vx, -450);
+  if (downkey) player1.setVelocity(player1_vx, 450);
 }
-//==========================================================================================
-
 //======================================================================================
 boolean hitGround(FBox ground) {
   ArrayList<FContact> contactList = ball.getContacts();
@@ -266,14 +223,4 @@ void reset() {
   ball.setPosition(width/2, height/2);
   ball.setAngularVelocity(0);
   ball.setVelocity(0, 0);
-}
-//===============================================================================
-boolean kick(FBox player) {
-  ArrayList<FContact> contactList1 = ball.getContacts();
-  for (int i =0; i<contactList1.size(); i++) {
-    FContact myContact1 = contactList1.get(i);
-    if (myContact1.contains(player))
-      return true;
-  }
-  return false;
 }
