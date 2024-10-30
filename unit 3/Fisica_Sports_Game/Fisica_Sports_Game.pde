@@ -32,7 +32,7 @@ PImage backgroundImg;
 Gif introbackground;
 
 //players
-float player1_vx, player1_vy, player2_vx, player2_vy,ball_vx,ball_vy;
+float player1_vx, player1_vy, player2_vx, player2_vy, ball_vx, ball_vy;
 FBox player1, player2;
 FCircle ball;
 
@@ -51,11 +51,11 @@ void setup() {
   player2Img = loadImage("Player2.png");
   ballImg = loadImage("ball.png");
   backgroundImg= loadImage("background.jpg");
-  
-  introbackground = new Gif("frame_","_delay-0.07s.gif",15,2,0,0,width,height);
+
+  introbackground = new Gif("frame_", "_delay-0.07s.gif", 15, 2, 0, 0, width, height);
 
   game = createFont("Games.ttf", 128);
-  
+
 
   groundGrass();
 }
@@ -82,19 +82,19 @@ void groundGrass() {
 
 void draw() {
 
-  
 
 
 
-if (MODE == INTRO) {
-  intro();
-} else if (MODE == GAME) {
-  game();
-} else if (MODE ==GAMEOVER) {
-  gameover();
-} else {
-  println("ERROR: MODE DNE, MODE + "+MODE);
-}
+
+  if (MODE == INTRO) {
+    intro();
+  } else if (MODE == GAME) {
+    game();
+  } else if (MODE ==GAMEOVER) {
+    gameover();
+  } else {
+    println("ERROR: MODE DNE, MODE + "+MODE);
+  }
 }
 
 void createWorld() {
