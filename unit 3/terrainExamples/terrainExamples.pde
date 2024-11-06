@@ -2,12 +2,10 @@
 FWorld world;
 
 color black = #000000;
-color green = #00FF00;
-color red   = #FF0000;
-color blue  = #0000FF;
-color lightpink = #e67cb8;
-color darkpink = #c2046f;
-color pink = #FF1Fb8;
+color green = #22b14c;
+color red   = #990030;
+color blue  = #00b7ef;
+color brown = #9c5a3c;
 
 PImage map;
 int gridSize =32;
@@ -32,11 +30,23 @@ void loadWorld(PImage img) {
   for (int  y = 0; y<img.height; y++) {
     for (int x = 0; x < img.width; x++ ) {
       color c = img.get(x, y);
-      if (c == pink) {
+      
+      if (c == green ) { //ground color
         FBox b = new FBox(gridSize, gridSize);
         b.setPosition(x*gridSize, y*gridSize);
         b.setNoStroke();
-        b.setFillColor(pink);
+         b.setFriction(46);
+        b.setFillColor(green);
+        b.setStatic(true);
+        b.setGrabbable(false);
+        world.add(b);
+      }
+       if (c == blue ) { //ice color
+        FBox b = new FBox(gridSize, gridSize);
+        b.setPosition(x*gridSize, y*gridSize);
+        b.setNoStroke();
+        b.setFriction(0);
+        b.setFillColor(blue);
         b.setStatic(true);
         b.setGrabbable(false);
         world.add(b);
