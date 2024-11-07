@@ -7,7 +7,9 @@ class FPlayer extends FBox{
    }
    void act(){
      float vy = getVelocityY();
+     float vx = getVelocityX();
      if(akey)setVelocity(-500,vy);
      if(dkey)setVelocity(500,vy);
+     if(jumpkey)setVelocity(vx, 3500);
    }
 }
