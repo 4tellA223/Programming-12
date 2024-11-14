@@ -26,7 +26,7 @@ void keyReleased(){
 void mouseReleased(){
 if(MODE==GAMEOVER){
     gameoverClick();
-  }else if(MODE==INTRO){
+  }else if(MODE==INTRO && introButton.touchingMouse()){
     introClick();
   }
 }

@@ -6,8 +6,7 @@ void intro() {
     fill(#9ADEDC);
     text("FISICA SPORTS GAME", width/2, height/2-200);
     
-    textSize(textsize);
-    text("Click any where to start",width/2, height/2);
+    introButton.show();
 
 
 }
