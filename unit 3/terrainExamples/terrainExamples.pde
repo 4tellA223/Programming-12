@@ -7,8 +7,9 @@ color red   = #990030;
 color blue  = #00b7ef;
 color brown = #9c5a3c;
 color leafs = #a8e61d;
+color purple= #6f3198;
 
-PImage map, ice, grass, Trunk;
+PImage map, ice, grass, Trunk,spike;
 //leafs
 PImage treeIntersect, treeMiddle, treeE, treeW;
 int gridSize =32;
@@ -36,6 +37,8 @@ void setup() {
   treeW = loadImage("treetop_w.png");
   treeW.resize(gridSize,gridSize);
   treeMiddle.resize(gridSize,gridSize);
+  spike = loadImage("spike.png");
+  spike.resize(gridSize,gridSize);
   
   loadWorld(map);
   loadPlayer();
@@ -78,8 +81,11 @@ void loadWorld(PImage img) {
         b.setSensor(true);
         b.setName("Tree Trunk");
         world.add(b);
-      }
-       if (c == leafs &&  s ==brown ) { //leaf Intersection
+      }if(c == purple){//spike
+        b.attachImage(spike);
+        b.setName("spike");
+        world.add(b);
+      }if (c == leafs &&  s ==brown ) { //leaf Intersection
         b.attachImage(treeIntersect);
         b.setName("treetop");
         world.add(b);
