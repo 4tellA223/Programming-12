@@ -3,11 +3,11 @@ FWorld world;
 
 color black = #000000;
 color green = #00FF00;
-color red   = #FF0000;
 color blue  = #0000FF;
 color lightpink = #e67cb8;
 color darkpink = #c2046f;
 color orange = #ff7e00;
+color red    = #ed1c24;
 
 PImage map;
 int gridSize =32;
@@ -15,19 +15,46 @@ float zoom=1.5;
 
 boolean upkey, downkey, leftkey, rightkey, wkey, akey, skey, dkey;
 FPlayer player;
+PImage[] idle;
+PImage[] jump;
+PImage[] run;
+PImage[] action;
 
 //game
-PImage bridge;
+PImage bridge, lava[];
 ArrayList<FGameObject> terrain;
+int numFrames = 6;
+String pre = "lava";
+String post = ".png";
+int speed;
+
 
 void setup() {
   size(600, 600);
+
   Fisica.init(this);
   terrain =  new ArrayList<FGameObject>();
   map = loadImage("map.png");
   bridge = loadImage("bridge.png");
   loadWorld(map);
   loadPlayer();
+  speed = 45;
+  
+  // load character image
+  idle = new PImage[2];
+  idle[0] = loadImage("idle0.png");
+  idle[1] = loadImage("idle1.png");
+  
+  jump = new PImage[1];
+  jump[0] = loadImage("jump0.png");
+  
+  run = new PImage[3];
+  run[0] = loadImage("runright0.png");
+  run[1] = loadImage("runright1.png");
+  run[2] = loadImage("runright2.png");
+  
+  action = idle;
+  
 }
 
 void loadWorld(PImage img) {
@@ -53,11 +80,14 @@ void loadWorld(PImage img) {
         b.setFillColor(green);
         b.setName("ground");
         world.add(b);
-      }
-      else if (c == orange) { // bridge
+      } else if (c == orange) { // bridge
         FBridge br = new FBridge(x*gridSize, y*gridSize);
         terrain.add(br);
         world.add(br);
+      } else if (c == red) { // lava
+        FLava lava = new FLava(x*gridSize, y*gridSize);
+        terrain.add(lava);
+        world.add(lava);
       }
     }
   }
@@ -72,7 +102,7 @@ void loadPlayer() {
 void draw() {
   background(#FFFFFF);
   drawWorld();
-  player.act();
+  actWorld();
 }
 
 void actWorld() {
