@@ -3,8 +3,8 @@ FWorld world;
 
 color black = #000000;
 color green = #00FF00;
-color blue  = #0000FF;
-color lightpink = #e67cb8;
+color gray  = #464646;
+color yellow = #fff200;
 color darkpink = #c2046f;
 color orange = #ff7e00;
 color red    = #ed1c24;
@@ -19,42 +19,58 @@ PImage[] idle;
 PImage[] jump;
 PImage[] run;
 PImage[] action;
+PImage[] goomba;
 
 //game
 PImage bridge, lava[];
 ArrayList<FGameObject> terrain;
+ArrayList<FGameObject> enemies;
 int numFrames = 6;
 String pre = "lava";
 String post = ".png";
 int speed;
 
+//game image
+PImage brick;
+
 
 void setup() {
   size(600, 600);
+  //load image
+  brick = loadImage("brick.png");
+  map = loadImage("map.png");
+  bridge = loadImage("bridge.png");
+  
+  brick.resize(gridSize,gridSize);
 
   Fisica.init(this);
   terrain =  new ArrayList<FGameObject>();
-  map = loadImage("map.png");
-  bridge = loadImage("bridge.png");
+ 
   loadWorld(map);
   loadPlayer();
   speed = 45;
-  
+
   // load character image
   idle = new PImage[2];
   idle[0] = loadImage("idle0.png");
   idle[1] = loadImage("idle1.png");
-  
+
   jump = new PImage[1];
   jump[0] = loadImage("jump0.png");
-  
+
   run = new PImage[3];
   run[0] = loadImage("runright0.png");
   run[1] = loadImage("runright1.png");
   run[2] = loadImage("runright2.png");
   
+  //enemies--------------------
+  goomba = new PImage[2];
+  goomba[0] = loadImage("goomba0.png");
+  goomba[1] = loadImage("goomba1.png");
+  goomba[0].resize(gridSize,gridSize);
+  goomba[1].resize(gridSize,gridSize);
+
   action = idle;
-  
 }
 
 void loadWorld(PImage img) {
@@ -80,7 +96,12 @@ void loadWorld(PImage img) {
         b.setFillColor(green);
         b.setName("ground");
         world.add(b);
-      } else if (c == orange) { // bridge
+      }else if(c == gray){
+        b.setName("wall");
+        b.attachImage(brick);
+        world.add(b);
+      } 
+      else if (c == orange) { // bridge
         FBridge br = new FBridge(x*gridSize, y*gridSize);
         terrain.add(br);
         world.add(br);
@@ -88,6 +109,11 @@ void loadWorld(PImage img) {
         FLava lava = new FLava(x*gridSize, y*gridSize);
         terrain.add(lava);
         world.add(lava);
+      }
+      else if(c == yellow){
+      //FGoomba gmb = new FGoomba(x*gridSize,y*gridSize);
+      //enemies.add(gmb);
+      //world.add(gmb);
       }
     }
   }
@@ -111,6 +137,10 @@ void actWorld() {
     FGameObject t = terrain.get(i);
     t.act();
   }
+  //for (int i = 0; i<enemies.size(); i++) {
+  //  FGameObject e = enemies.get(i);
+  //  e.act();
+  //}
 }
 
 void drawWorld() {

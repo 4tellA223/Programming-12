@@ -2,8 +2,7 @@ class FPlayer extends FGameObject {
   //fields
   int frame;
   int direction;
-  final int L = -1;
-  final int R = 1;
+  int lives;
 
   FPlayer() {
     super();
@@ -27,10 +26,12 @@ class FPlayer extends FGameObject {
     }
     if (akey) {
       action = run;
+       direction =L;
       setVelocity(-500, vy);
     }
     if (dkey) {
       action = run;
+       direction =R;
       setVelocity(500, vy);
     }
     if (wkey) {
@@ -48,7 +49,7 @@ class FPlayer extends FGameObject {
     if (frame >= action.length) frame = 0;
     if (frameCount % 5 == 0) {
       if(direction == R)attachImage(action[frame]);
-      if(direction == L)attachImage(reverseImage(action[frame]));
+      else if(direction == L)attachImage(reverseImage(action[frame]));
       frame++;
     }
   }

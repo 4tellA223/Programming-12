@@ -7,7 +7,7 @@ PImage reverseImage(PImage image) {
       int xPixel, yPixel;
       xPixel = image.width-1-i;
       yPixel = j;
-      reverse.pixels[yPixel*image.width + xPixel] = image.pixels[j];
+      reverse.pixels[yPixel*image.width + xPixel] = image.pixels[j*image.width+i];
     }
   }
   return reverse;
