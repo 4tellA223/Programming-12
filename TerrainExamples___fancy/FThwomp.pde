@@ -32,7 +32,7 @@ class FThwomp extends FGameObject {
       if (player.getY() >= getY() - gridSize/2) {
         player.setPosition(80, 0);
         setStatic(true);
-        setPosition(160, 352);
+        setPosition(160, 352+17);
       }
     }
   }
