@@ -8,7 +8,7 @@ class FPlayer extends FGameObject {
     super();
     frame = 0;
     direction =R;
-    setPosition(180, 0);
+    setPosition(80, 0);
     setRotatable(false);
     setName("player");
     setFillColor(red);
@@ -43,7 +43,8 @@ class FPlayer extends FGameObject {
     if (checkForCollisions("player")) {
       if (checkForCollisions("spike"))setPosition(200, 0);
       if (checkForCollisions("lava"))setPosition(200, 0);
-    }
+      if(checkForCollisions("hammer"))setPosition(200, 0); 
+  }
   }
   void animate() {
     if (frame >= action.length) frame = 0;

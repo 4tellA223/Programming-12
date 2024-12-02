@@ -1,25 +1,44 @@
 class FThwomp extends FGameObject {
   int frame = 0;
-  float xposition = 0;
-  
+
+
   FThwomp(float x, float y) {
     super();
     setName("thwomp");
-    setPosition(x,y);
+    setPosition(x, y);
     setFriction(34);
     setStatic(true);
-    xposition = x;
+    setRotatable(false);
   }
-  
-  void act(){
+
+  void act() {
     detect();
   }
-  
-   
-  void detect(){
-    if(player.getX() == xposition ){
+
+
+  void detect() {
+    attachImage(thwomp[0]);
+    if (player.getX()>=getX() && player.getX()<=getX()+ gridSize) {
       setStatic(false);
       attachImage(thwomp[1]);
     }
+    if (checkForCollisions("ground")) {
+      attachImage(thwomp[0]);
+      setPosition(160, 352);
+      setStatic(true);
+    }
+    //kill
+    if (checkForCollisions("player")) {
+      if (player.getY() >= getY() - gridSize/2) {
+        player.setPosition(80, 0);
+        setStatic(true);
+        setPosition(160, 352);
+      }
+    }
+  }
+
+  void move() {
+    float vx = getVelocityX();
+    setVelocity( vx, 40*-1);
   }
 }

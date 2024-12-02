@@ -5,9 +5,10 @@ color black = #000000;
 color green = #00FF00;
 color gray  = #464646;
 color yellow = #fff200;
-color darkpink = #c2046f;
+color purple = #2f3699;
 color orange = #ff7e00;
 color red    = #ed1c24;
+color lightGray = #b4b4b4;
 
 PImage map;
 int gridSize =32;
@@ -21,6 +22,8 @@ PImage[] run;
 PImage[] action;
 PImage[] goomba;
 PImage[] thwomp;
+PImage[] HammerBro;
+PImage Hammer;
 
 //game
 PImage bridge, lava[];
@@ -77,8 +80,16 @@ void setup() {
   thwomp = new PImage[2];
   thwomp[0] = loadImage("thwomp0.png");
   thwomp[1] = loadImage("thwomp1.png");
-  thwomp[0].resize(gridSize,gridSize);
-  thwomp[1].resize(gridSize,gridSize);
+  thwomp[0].resize(gridSize*2,gridSize*2);
+  thwomp[1].resize(gridSize*2,gridSize*2);
+  
+  HammerBro = new PImage[2];
+  HammerBro[0] = loadImage("hammerbro0.png");
+  HammerBro[1] = loadImage("hammerbro1.png");
+  HammerBro[0].resize(gridSize,gridSize);
+  HammerBro[1].resize(gridSize,gridSize);
+  
+  Hammer = loadImage("hammer.png");
 
   action = idle;
 }
@@ -124,6 +135,14 @@ void loadWorld(PImage img) {
       FGoomba gmb = new FGoomba(x*gridSize,y*gridSize);
       enemies.add(gmb);
       world.add(gmb);
+      }else if(c == lightGray){
+        FThwomp twp = new FThwomp(x*gridSize, y*gridSize+17);
+        enemies.add(twp);
+        world.add(twp);
+      }else if(c == purple){//Hammer bro
+        FHammerBro hmb = new FHammerBro(x*gridSize, y*gridSize);
+        enemies.add(hmb);
+        world.add(hmb);
       }
     }
   }
