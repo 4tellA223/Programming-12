@@ -1,4 +1,5 @@
 class FPlayer extends FGameObject {
+
   //fields
   int frame;
   int direction;
@@ -11,40 +12,49 @@ class FPlayer extends FGameObject {
     setPosition(80, 0);
     setRotatable(false);
     setName("player");
-    setFillColor(red);
+    
   }
   void act() {
     handleInput();
-    collisions();
     animate();
   }
+  //=================================================INPUT==============================================
   void handleInput() {
     float vy = getVelocityY();
     float vx = getVelocityX();
-    if (vy == 0) {
+    if (vy <= 2 && player.checkForCollisions("ground")) {
       action = idle;
     }
     if (akey) {
       action = run;
-       direction =L;
+      direction =L;
       setVelocity(-500, vy);
     }
     if (dkey) {
       action = run;
-       direction =R;
+      direction =R;
       setVelocity(500, vy);
     }
-    if (wkey) {
-      setVelocity(vx, -250);
+    if (!player.checkForCollisions("ground")) {
       action = jump;
     }
-  }
+    if (wkey && player.checkForCollisions("ground")) {
+      setVelocity(vx, -450);
+    }
+    
+    //CONTACTING HARMFUL OBJECTS
+    //if(player.checkForCollisions("spikes"))setPosition();
+  //============================================ANIMATE==============================================
   void animate() {
+
     if (frame >= action.length) frame = 0;
     if (frameCount % 5 == 0) {
-      if(direction == R)attachImage(action[frame]);
-      else if(direction == L)attachImage(reverseImage(action[frame]));
+      if (direction == R)attachImage(action[frame]);
+      else if (direction == L)attachImage(reverseImage(action[frame]));
       frame++;
     }
   }
+
+  
+  
 }
