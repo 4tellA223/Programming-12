@@ -11,7 +11,8 @@ PImage map;
 PImage background;
 PImage grasstop;
 PImage grassbottom;
-PImage spikes;
+PImage spikes,spikesRight,spikesLeft;
+float respondX, respondY;
 
 int MODE = 1;
 final int INTRO   = 0;
@@ -66,12 +67,16 @@ void loadImages() {
   grasstop = loadImage("texture/grass_top.png");
   grassbottom = loadImage("texture/grass_mid.png");
   spikes = loadImage("texture/spike.png");
+  spikesRight =loadImage("texture/spike_right.png");
+  spikesLeft = loadImage("texture/spike_left.png");
 
   //RESIZE
   grasstop.resize(gridSize, gridSize);
   grassbottom.resize(gridSize, gridSize);
   background.resize(width, height);
   spikes.resize(gridSize,gridSize);
+  spikesRight.resize(gridSize,gridSize);
+  spikesLeft.resize(gridSize,gridSize);
 
 
   //PLAYER MOVEMENT ===================================================

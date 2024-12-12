@@ -29,14 +29,33 @@ void loadAWorld(PImage img) {
         b.attachImage(grassbottom);
         b.setName("wall");
         world.add(b);
-      }else if(c == blueCuphead){ //npc cuphead
-        FMughead mgh = new FMughead(x*gridSize,y*gridSize);
+      } else if (c == blueCuphead) { //npc cuphead
+        FMughead mgh = new FMughead(x*gridSize, y*gridSize);
         npc.add(mgh);
         world.add(mgh);
-      }else if(c == spike){//spikes
+      } else if (c == spike && w == grass && s == grass && n == grass) {//spikes right
+        b.attachImage(spikesRight);
+        b.setName("spikes");
+        world.add(b);
+      } else if (c == spike && e == grass && s == grass && n == grass) {//spikes left
+        b.attachImage(spikesLeft);
+        b.setName("spikes");
+        world.add(b);
+      } else if (c == spike && w == grass && s == spike) {// spikes on spikes left
+        b.attachImage(spikesLeft);
+        b.setName("spikes");
+        world.add(b);
+      } else if (c== spike && s == grass && w == grass && n == spike) {// spikes below spikes left
+        b.attachImage(spikesLeft);
+        b.setName("spikes");
+        world.add(b);
+      } else if ( c == spike ) {
         b.attachImage(spikes);
         b.setName("spikes");
         world.add(b);
+      }else if(c == #000000){
+        b.setName("world edge");
+        
       }
     }
   }

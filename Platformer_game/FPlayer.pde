@@ -12,11 +12,12 @@ class FPlayer extends FGameObject {
     setPosition(80, 0);
     setRotatable(false);
     setName("player");
-    
   }
   void act() {
     handleInput();
     animate();
+    checkPoints();
+    playerDeath();
   }
   //=================================================INPUT==============================================
   void handleInput() {
@@ -41,9 +42,7 @@ class FPlayer extends FGameObject {
     if (wkey && player.checkForCollisions("ground")) {
       setVelocity(vx, -450);
     }
-    
-    //CONTACTING HARMFUL OBJECTS
-    //if(player.checkForCollisions("spikes"))setPosition();
+  }
   //============================================ANIMATE==============================================
   void animate() {
 
@@ -54,7 +53,18 @@ class FPlayer extends FGameObject {
       frame++;
     }
   }
-
-  
-  
+  //================================CHECK POINT==================================
+  void checkPoints() {
+    if (player.checkForCollisions("Mughead")) {
+      respondX = getX();
+      respondY = getY();
+    }
+  }
+  //==============================HARMFUL VARIABLE============================
+  void playerDeath() {
+    //CONTACTING HARMFUL OBJECTS
+    if (player.checkForCollisions("spikes")) {
+      setPosition(respondX, respondY);
+    }
+  }
 }
