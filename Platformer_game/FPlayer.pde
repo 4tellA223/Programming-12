@@ -9,7 +9,7 @@ class FPlayer extends FGameObject {
     super();
     frame = 0;
     direction =R;
-    setPosition(80, 0);
+    setPosition(80, 180);
     setRotatable(false);
     setName("player");
   }
@@ -64,6 +64,8 @@ class FPlayer extends FGameObject {
   void playerDeath() {
     //CONTACTING HARMFUL OBJECTS
     if (player.checkForCollisions("spikes")) {
+      setPosition(respondX, respondY);
+    }else if (player.checkForCollisions("world edge")) {
       setPosition(respondX, respondY);
     }
   }

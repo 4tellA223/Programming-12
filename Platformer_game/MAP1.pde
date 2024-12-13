@@ -53,9 +53,13 @@ void loadAWorld(PImage img) {
         b.attachImage(spikes);
         b.setName("spikes");
         world.add(b);
-      }else if(c == #000000){
+      }else if(c == black){ // World Edge
         b.setName("world edge");
-        
+        world.add(b);
+      }else if (c == lever){//Lever
+        FLever lev = new FLever(x*gridSize, y*gridSize);
+        b.setName("levers");
+        world.add(lev);
       }
     }
   }

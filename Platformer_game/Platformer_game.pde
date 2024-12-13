@@ -12,7 +12,10 @@ PImage background;
 PImage grasstop;
 PImage grassbottom;
 PImage spikes,spikesRight,spikesLeft;
-float respondX, respondY;
+PImage openLever, closeLever;
+
+float respondX = 80;
+float respondY = 180;
 
 int MODE = 1;
 final int INTRO   = 0;
@@ -22,7 +25,7 @@ final int GAMEOVER= 3;
 
 //PLAYER VAIRABLE
 FPlayer player;
-boolean upkey, downkey, leftkey, rightkey, wkey, akey, skey, dkey, spacekey;
+boolean upkey, downkey, leftkey, rightkey, wkey, akey, skey, dkey, spacekey,ekey;
 PImage[] action;
 PImage[] idle;
 PImage[] aim;
@@ -34,9 +37,12 @@ PImage[] mughead;
 color grass = #a8e61d;
 color blueCuphead = #00b7ef;
 color spike = #b4b4b4;
+color black = #000000;
+color lever = #ff7e00;
 
 //GAME
 ArrayList<FGameObject> npc;
+boolean[] levers;
 
 
 //=========================================SETUP==============================================
@@ -50,6 +56,7 @@ void setup() {
   rectMode(CENTER);
   
   npc = new ArrayList();
+  levers = new boolean[4];
 
 
   //LOAD IMAGE
@@ -69,6 +76,8 @@ void loadImages() {
   spikes = loadImage("texture/spike.png");
   spikesRight =loadImage("texture/spike_right.png");
   spikesLeft = loadImage("texture/spike_left.png");
+  openLever = loadImage("texture/Lever_open.png");
+  closeLever = loadImage("texture/Lever_close.png");
 
   //RESIZE
   grasstop.resize(gridSize, gridSize);
@@ -77,6 +86,8 @@ void loadImages() {
   spikes.resize(gridSize,gridSize);
   spikesRight.resize(gridSize,gridSize);
   spikesLeft.resize(gridSize,gridSize);
+  openLever.resize(gridSize,gridSize);
+  closeLever.resize(gridSize,gridSize);
 
 
   //PLAYER MOVEMENT ===================================================
@@ -160,5 +171,8 @@ void drawWorld() {
   for (int i = 0; i<npc.size(); i++) {
     FGameObject n = npc.get(i);
     n.act();
+  }
+  for(int i = 0; i < levers.length;i++){
+    levers[i] = false;
   }
 }
