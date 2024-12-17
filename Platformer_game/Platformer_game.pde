@@ -13,9 +13,11 @@ PImage grasstop;
 PImage grassbottom;
 PImage spikes,spikesRight,spikesLeft;
 PImage openLever, closeLever;
+PImage walls;
 
 float respondX = 80;
 float respondY = 180;
+int count = 3;
 
 int MODE = 1;
 final int INTRO   = 0;
@@ -25,7 +27,7 @@ final int GAMEOVER= 3;
 
 //PLAYER VAIRABLE
 FPlayer player;
-boolean upkey, downkey, leftkey, rightkey, wkey, akey, skey, dkey, spacekey,ekey;
+boolean upkey, downkey, leftkey, rightkey, wkey, akey, skey, dkey, spacekey,ekey,zkey;
 PImage[] action;
 PImage[] idle;
 PImage[] aim;
@@ -42,7 +44,8 @@ color lever = #ff7e00;
 
 //GAME
 ArrayList<FGameObject> npc;
-boolean[] levers;
+ArrayList<FGameObject> lve;
+
 
 
 //=========================================SETUP==============================================
@@ -50,14 +53,15 @@ boolean[] levers;
 void setup() {
 
   //DEFAULT
-  fullScreen();
+  //fullScreen();
+  size(900,900);
   Fisica.init(this);
   textAlign(CENTER, CENTER);
   rectMode(CENTER);
   
   npc = new ArrayList();
-  levers = new boolean[4];
-
+  lve= new ArrayList();
+ 
 
   //LOAD IMAGE
   loadImages();
@@ -78,6 +82,7 @@ void loadImages() {
   spikesLeft = loadImage("texture/spike_left.png");
   openLever = loadImage("texture/Lever_open.png");
   closeLever = loadImage("texture/Lever_close.png");
+  walls = loadImage("texture/wall.png");
 
   //RESIZE
   grasstop.resize(gridSize, gridSize);
@@ -88,6 +93,7 @@ void loadImages() {
   spikesLeft.resize(gridSize,gridSize);
   openLever.resize(gridSize,gridSize);
   closeLever.resize(gridSize,gridSize);
+  walls.resize(gridSize,gridSize);
 
 
   //PLAYER MOVEMENT ===================================================
@@ -162,7 +168,8 @@ void draw() {
 
 void drawWorld() {
   pushMatrix();
-  translate(-player.getX()*zoom+width/2, -player.getY()*zoom+height/2);
+  if(!zkey)translate(-player.getX()*zoom+width/2, -player.getY()*zoom+height/2);
+  
   scale(zoom);
   world.step();
   world.draw();
@@ -172,7 +179,9 @@ void drawWorld() {
     FGameObject n = npc.get(i);
     n.act();
   }
-  for(int i = 0; i < levers.length;i++){
-    levers[i] = false;
+  for(int i = 0; i < lve.size();i++){
+    FGameObject l = lve. get(i);
+    l.act();
   }
+ 
 }

@@ -33,7 +33,11 @@ void loadAWorld(PImage img) {
         FMughead mgh = new FMughead(x*gridSize, y*gridSize);
         npc.add(mgh);
         world.add(mgh);
-      } else if (c == spike && w == grass && s == grass && n == grass) {//spikes right
+      } else if (c == spike && e == grass && s != grass && w != grass ) {//spikes right
+        b.attachImage(spikesRight);
+        b.setName("spikes");
+        world.add(b);
+      } else if ( c== spike && n == spike && e == grass && s == grass && w != grass) {
         b.attachImage(spikesRight);
         b.setName("spikes");
         world.add(b);
@@ -53,12 +57,13 @@ void loadAWorld(PImage img) {
         b.attachImage(spikes);
         b.setName("spikes");
         world.add(b);
-      }else if(c == black){ // World Edge
+      } else if (c == black) { // World Edge
         b.setName("world edge");
+        b.attachImage(walls);
         world.add(b);
-      }else if (c == lever){//Lever
+      } else if (c == lever) {//Lever
         FLever lev = new FLever(x*gridSize, y*gridSize);
-        b.setName("levers");
+        lve.add(lev);
         world.add(lev);
       }
     }

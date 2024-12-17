@@ -7,6 +7,7 @@ void keyPressed() {
   if (key == 'd' || key =='D')dkey = true;
   if (key == 's' || key =='S')skey = true;
   if (key == 'e' || key =='E')ekey = true;
+  if (key == 'm' || key =='M')zkey = true;
 
   if (keyCode == UP)upkey = true;
   if (keyCode == RIGHT)rightkey =true;
@@ -20,6 +21,7 @@ void keyReleased() {
   if (key == 'd' || key =='D')dkey = !true;
   if (key == 's' || key =='S')skey = false;
   if (key == 'e' || key =='E')ekey = !true;
+   if (key == 'm' || key =='M')zkey =!true;
 
 
   if (keyCode == UP)upkey = !true;

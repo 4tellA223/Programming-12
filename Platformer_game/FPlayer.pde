@@ -41,7 +41,9 @@ class FPlayer extends FGameObject {
     }
     if (wkey && player.checkForCollisions("ground")) {
       setVelocity(vx, -450);
-    }
+    }if(zkey){
+      zoom = 0.35;
+    }else if(!zkey)zoom = 1.5;
   }
   //============================================ANIMATE==============================================
   void animate() {
@@ -68,5 +70,6 @@ class FPlayer extends FGameObject {
     }else if (player.checkForCollisions("world edge")) {
       setPosition(respondX, respondY);
     }
+    
   }
 }
