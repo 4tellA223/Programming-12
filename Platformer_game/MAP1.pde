@@ -65,14 +65,11 @@ void loadAWorld(PImage img) {
         FLever lev = new FLever(x*gridSize, y*gridSize);
         lve.add(lev);
         world.add(lev);
+      } else if (c == purple) { //teleport portal
+        FPortal prt = new FPortal(x*gridSize,y*gridSize);
+        Portal = prt;
+        world.add(prt);
       }
     }
   }
 }
-
-//void drawBG(PImage img) {
-//  float xoff = map(player.getX(), 0, 64*gridSize, 300, 0);
-//  println(xoff);
-//  float yoff = map(player.getY(), 0, 64*gridSize, 300, 0);
-//  image(img, int(xoff-500), int(yoff-450));
-//}

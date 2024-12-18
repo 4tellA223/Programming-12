@@ -11,13 +11,13 @@ PImage map;
 PImage background;
 PImage grasstop;
 PImage grassbottom;
-PImage spikes,spikesRight,spikesLeft;
+PImage spikes, spikesRight, spikesLeft;
 PImage openLever, closeLever;
 PImage walls;
 
 float respondX = 80;
 float respondY = 180;
-int count = 3;
+int count = 5;
 
 int MODE = 1;
 final int INTRO   = 0;
@@ -27,13 +27,14 @@ final int GAMEOVER= 3;
 
 //PLAYER VAIRABLE
 FPlayer player;
-boolean upkey, downkey, leftkey, rightkey, wkey, akey, skey, dkey, spacekey,ekey,zkey;
+boolean upkey, downkey, leftkey, rightkey, wkey, akey, skey, dkey, spacekey, ekey, zkey;
 PImage[] action;
 PImage[] idle;
 PImage[] aim;
 PImage[] run;
 PImage[] jump;
 PImage[] mughead;
+PImage[] portal;
 
 //COLORS
 color grass = #a8e61d;
@@ -41,10 +42,12 @@ color blueCuphead = #00b7ef;
 color spike = #b4b4b4;
 color black = #000000;
 color lever = #ff7e00;
+color purple = #6f3198;
 
 //GAME
 ArrayList<FGameObject> npc;
 ArrayList<FGameObject> lve;
+FGameObject Portal;
 
 
 
@@ -54,19 +57,21 @@ void setup() {
 
   //DEFAULT
   //fullScreen();
-  size(900,900);
+  size(900, 900);
   Fisica.init(this);
   textAlign(CENTER, CENTER);
   rectMode(CENTER);
-  
+
   npc = new ArrayList();
   lve= new ArrayList();
- 
+  Portal = new FGameObject();
+
 
   //LOAD IMAGE
   loadImages();
 
   //LOAD VARIABLE
+
   loadWorld(map);
   loadPlayer();
 }
@@ -84,16 +89,25 @@ void loadImages() {
   closeLever = loadImage("texture/Lever_close.png");
   walls = loadImage("texture/wall.png");
 
+
   //RESIZE
   grasstop.resize(gridSize, gridSize);
   grassbottom.resize(gridSize, gridSize);
   background.resize(width, height);
-  spikes.resize(gridSize,gridSize);
-  spikesRight.resize(gridSize,gridSize);
-  spikesLeft.resize(gridSize,gridSize);
-  openLever.resize(gridSize,gridSize);
-  closeLever.resize(gridSize,gridSize);
-  walls.resize(gridSize,gridSize);
+  spikes.resize(gridSize, gridSize);
+  spikesRight.resize(gridSize, gridSize);
+  spikesLeft.resize(gridSize, gridSize);
+  openLever.resize(gridSize, gridSize);
+  closeLever.resize(gridSize, gridSize);
+  walls.resize(gridSize, gridSize);
+
+  //GIF MAP VARIABLE===============================================
+  portal = new PImage[9];
+
+  for (int i = 0; i<portal.length; i++) {
+    portal[i] = loadImage("texture/portal/frame_"+i+"_delay-0.1s.gif");
+    portal[i].resize(gridSize, gridSize);
+  }
 
 
   //PLAYER MOVEMENT ===================================================
@@ -126,7 +140,7 @@ void loadImages() {
   //==========================CHARACTER IMAGE==========================
 
   //mughead
-   mughead = new PImage[5];
+  mughead = new PImage[5];
   for (int i = 1; i <= mughead.length; i ++) {
     mughead[i-1] = loadImage("NPC/MugHead/mugman_idle_000" + i + ".png");
     mughead[i-1].resize(gridSize, gridSize);
@@ -167,21 +181,26 @@ void draw() {
 //==========================================DRAW WORLD=============================================
 
 void drawWorld() {
+  image(background, 0, 0);
   pushMatrix();
-  if(!zkey)translate(-player.getX()*zoom+width/2, -player.getY()*zoom+height/2);
-  
+  if (!zkey)translate(-player.getX()*zoom+width/2, -player.getY()*zoom+height/2);
+
   scale(zoom);
   world.step();
   world.draw();
   popMatrix();
-  
+
   for (int i = 0; i<npc.size(); i++) {
     FGameObject n = npc.get(i);
     n.act();
   }
-  for(int i = 0; i < lve.size();i++){
+  for (int i = 0; i < lve.size(); i++) {
     FGameObject l = lve. get(i);
     l.act();
   }
- 
+  Portal.act();
+}
+//============================================================
+void drawBackground(PImage img) {
+  image(img, 0, 0);
 }

@@ -7,7 +7,7 @@
     setPosition(x, y);
     setRotatable(false);
     setStatic(true);
-    setSensor(false);
+    setSensor(true);
   }
   
   void act() {
