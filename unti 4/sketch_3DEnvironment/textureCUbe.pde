@@ -1,4 +1,4 @@
-void grassBlock(PImage a, PImage b, PImage c , float x, float y, float z,float s) {
+void texturedCube(int x, int y, int z, PImage a, PImage b, PImage c, int s) {
   pushMatrix();
   translate(x,y,z);
   scale(s);
