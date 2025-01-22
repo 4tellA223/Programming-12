@@ -59,3 +59,20 @@ void texturedCube(int x, int y, int z, PImage a, PImage b, PImage c, int s) {
   endShape();
   popMatrix();
 }
+
+boolean canMoveForward() {
+  float fwdx, fwdy, fwdz;
+  int mapx, mapy;
+  fwdx = eyeX + cos(leftRightHeadAngle) * 200;
+  fwdy = eyeY ;
+  fwdz = eyeZ + sin(leftRightHeadAngle) * 200;
+
+  mapx = int(fwdx + 2000) / gridSize;
+  mapy = int(fwdz + 2000) / gridSize;
+
+  if (map.get(mapx, mapy) == white) {
+    return true;
+  }
+
+  return false;
+}
