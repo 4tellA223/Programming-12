@@ -22,6 +22,11 @@ void move() {
     leftRightHeadAngle = leftRightHeadAngle + (mouseX - pmouseX) *0.01;
     upDownHeadAngle = upDownHeadAngle + (mouseY - pmouseY)*0.01;
   }
+  
+  if(upkey){
+    Bullet b = new Bullet();
+    objects.add(b);
+  }
 
   focusX = eyeX + cos(leftRightHeadAngle)*300 ;
   focusZ = eyeZ + sin(leftRightHeadAngle)*300;
@@ -47,6 +52,25 @@ void move() {
 
   popMatrix();
 }
+
+
+boolean canMoveForward() {
+  float fwdx, fwdy, fwdz;
+  int mapx, mapy;
+  fwdx = eyeX + cos(leftRightHeadAngle) * 200;
+  fwdy = eyeY ;
+  fwdz = eyeZ + sin(leftRightHeadAngle) * 200;
+
+  mapx = int(fwdx + 2000) / gridSize;
+  mapy = int(fwdz + 2000) / gridSize;
+
+  if (map.get(mapx, mapy) == white) {
+    return true;
+  }
+
+  return false;
+}
+
 
 boolean canMoveRight() {
   float righty, rightx, rightz;
