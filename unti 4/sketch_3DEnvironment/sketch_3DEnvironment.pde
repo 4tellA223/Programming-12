@@ -8,18 +8,22 @@ PImage map;
 
 PImage walls;
 PImage logSide, logTop, oakplank;
+PImage[] lava;
 
 //Color pallette
 color black = #000000;
 color white = #FFFFFF;
 color dullBlue = #546d8e; // stonewall
 color brown = #9c5a3c; //oak
+color red = #ed1c24; // lava
 
 //Control Variable
 boolean skipFrame;
 boolean wkey, akey, skey, dkey,upkey;
 float eyeX, eyeY, eyeZ, focusX, focusY, focusZ, tiltX, tiltY, tiltZ;
 float leftRightHeadAngle, upDownHeadAngle;
+
+int Frame = 0;
 
 //GAME OBJECTS
 ArrayList<GameObject> objects;
@@ -71,6 +75,12 @@ void loadImage() {
   logTop = loadImage("Oak_Log_Top.png");
   logSide = loadImage("Oak_Log_Side.png");
   oakplank = loadImage("oakplank.jpg");
+  
+  // lava
+  lava = new PImage[10];
+   for (int i = 0; i<10; i++) {
+      lava[i] = loadImage("e7a88e87-ce19-4254-8bb5-41dbf9006f4c-"+i+".png");
+   }
 
   textureMode(NORMAL);
 }
@@ -86,6 +96,9 @@ void draw() {
   drawFloor(-2000, 2000, 100, height);
 
   drawMap();
+  
+   if(Frame == 9) Frame = 0;
+   if(frameCount % 6 == 0) Frame++;
   
   int i = 0;
    while( i < objects.size()){

@@ -1,7 +1,7 @@
 void move() {
   pushMatrix();
   //KEY CONTROL
-  if (wkey && canMoveForward() ) {
+  if (wkey) {
     eyeX = eyeX + cos(leftRightHeadAngle)*10;
     eyeZ = eyeZ + sin(leftRightHeadAngle)*10;
   }

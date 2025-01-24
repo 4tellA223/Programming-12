@@ -32,8 +32,8 @@ class GameObject{
     
     translate(loc.x,loc.y,loc.z);
     fill(white);
-    stroke(100);
-    box(size);
+    noStroke();
+    sphere(size);
     
     popMatrix();
   }
