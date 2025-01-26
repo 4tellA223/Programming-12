@@ -14,7 +14,11 @@ void drawMap() {
         texturedCube(x*gridSize-2000, height-gridSize*2, y*gridSize-2000, logTop, logTop, logSide, gridSize);
         texturedCube(x*gridSize-2000, height-gridSize*3, y*gridSize-2000, logTop, logTop, logSide, gridSize);
       }if( c == red){
-        texturedCube1(x*gridSize-2000, height, y*gridSize-2000 ,"e7a88e87-ce19-4254-8bb5-41dbf9006f4c-", "png" , gridSize, 10);
+        
+        if(frameCount % 15 == 0) lavaFrame++;
+        if(lavaFrame == 9) lavaFrame = 0;
+        print(lavaFrame);
+        texturedCube1(x*gridSize-2000, height, y*gridSize-2000, lava, gridSize, lavaFrame);
       }
     }
   }

@@ -60,14 +60,13 @@ void texturedCube(int x, int y, int z, PImage a, PImage b, PImage c, int s) {
   popMatrix();
 }
 
-void texturedCube1(int x, int y, int z, String pre, String post, int s, int numFrames) {
+void texturedCube1(int x, int y, int z, ArrayList<PImage> gif, int s, int frameIndex) {
   pushMatrix();
   translate(x,y,z);
   scale(s);
   //rotateX(rotx);
   //rotateY(roty);
   
-  int speed = 5;
 
   noStroke();
 
@@ -75,7 +74,7 @@ void texturedCube1(int x, int y, int z, String pre, String post, int s, int numF
   
   beginShape(QUADS);
  
-    texture(lava[Frame]);
+  texture(gif.get(frameIndex));
     
 
   

@@ -8,7 +8,8 @@ PImage map;
 
 PImage walls;
 PImage logSide, logTop, oakplank;
-PImage[] lava;
+ArrayList<PImage> lava = new ArrayList<PImage>();
+int lavaFrame = 0;
 
 //Color pallette
 color black = #000000;
@@ -22,8 +23,6 @@ boolean skipFrame;
 boolean wkey, akey, skey, dkey,upkey;
 float eyeX, eyeY, eyeZ, focusX, focusY, focusZ, tiltX, tiltY, tiltZ;
 float leftRightHeadAngle, upDownHeadAngle;
-
-int Frame = 0;
 
 //GAME OBJECTS
 ArrayList<GameObject> objects;
@@ -77,10 +76,11 @@ void loadImage() {
   oakplank = loadImage("oakplank.jpg");
   
   // lava
-  lava = new PImage[10];
-   for (int i = 0; i<10; i++) {
-      lava[i] = loadImage("e7a88e87-ce19-4254-8bb5-41dbf9006f4c-"+i+".png");
-   }
+  for (int i = 0; i < 10; i++) {
+    PImage lavaImage = loadImage("e7a88e87-ce19-4254-8bb5-41dbf9006f4c-" + i + ".png");
+    lava.add(lavaImage);
+    
+  }
 
   textureMode(NORMAL);
 }
@@ -97,8 +97,7 @@ void draw() {
 
   drawMap();
   
-   if(Frame == 9) Frame = 0;
-   if(frameCount % 6 == 0) Frame++;
+   
   
   int i = 0;
    while( i < objects.size()){
